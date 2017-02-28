@@ -2,13 +2,42 @@
 std::unique_ptr<Application> DICT::app = std::make_unique<Application>();
 std::unique_ptr<Gui> DICT::gui = std::make_unique<Gui>();
 std::unique_ptr<ShanbayDict> DICT::shanbayDict;// = std::make_unique<ShanbayDict>();
+std::unique_ptr<YoudaoDict> DICT::youdaoDict;
 std::unique_ptr<Config> DICT::cfg = std::make_unique<Config>();
 Dictlogo* DICT::logo ;
 ShowType DICT::showType;
+
+void DICT::queryWord(const QString& word){
+    DICT::shanbayDict->queryWord(word);
+    DICT::youdaoDict->queryWord(word);
+}
+
+void DICT::showWord(DictType dictType,const QString &wordinfo){
+    if(DICT::showType == ShowType::main){
+        DICT::gui->showWord(dictType,wordinfo);
+    }else{
+        DICT::gui->showWordInBalloon(dictType,wordinfo);
+    }
+}
+
+////////////////////////
 void DICT::init(){
     DICT::logo = new Dictlogo();
     DICT::shanbayDict = std::make_unique<ShanbayDict>();
     DICT::shanbayDict->connect();
+
+    DICT::youdaoDict = std::make_unique<YoudaoDict>();
+
+    QObject::connect(DICT::shanbayDict.get(),&ShanbayDict::signalRetWordinfo,
+                     [&](const QString& wordinfo){
+        DICT::showWord(DictType::ShanbayDict,wordinfo);
+    });
+
+    QObject::connect(DICT::youdaoDict.get(),&YoudaoDict::signalRetWordinfo,
+                     [&](const QString& wordinfo){
+        DICT::showWord(DictType::YoudaoDict,wordinfo);
+    });
+
     QObject::connect(DICT::logo,&Dictlogo::Clicked,
                      [&](){
         //qDebug()<<"logo clicked:"<<capture_text;
@@ -62,14 +91,7 @@ void DICT::init(){
         DICT::showType = ShowType::main;
         DICT::queryWord(word);
     });
-    QObject::connect(DICT::shanbayDict.get(),&ShanbayDict::signalRetWordinfo,
-                     [&](const QString& wordinfo){
-        if(DICT::showType == ShowType::main){
-            DICT::gui->showWord(wordinfo);
-        }else{
-            DICT::gui->showWordInBalloon(wordinfo);
-        }
-    });
+
 
     QObject::connect(DICT::gui.get(),&Gui::signalBtnaddwordClick,
                      [&](const QString type,const QString id){
@@ -79,7 +101,4 @@ void DICT::init(){
                      [&](const QString&data){
         DICT::gui->addWordRet(data);
     });
-}
-void DICT::queryWord(const QString& word){
-    DICT::shanbayDict->queryWord(word);
 }

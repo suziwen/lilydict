@@ -36,7 +36,7 @@ void Application::close(){
 }
 void Application::showSystrayIcon(){
     if(trayIcon!=nullptr) return;
-    trayIcon = new QSystemTrayIcon(QIcon(":/img/logo.png"),qApp);
+    trayIcon = new QSystemTrayIcon(QIcon(":/img/app.ico"),qApp);
 
     dictMenu = new QMenu("菜单");
     //dictMenu->setLayoutDirection(Qt::LeftToRight);
@@ -142,7 +142,12 @@ void Application::run(){
     DICT::init();
     setScreenText();
     showSystrayIcon();
-    if(!DICT::cfg->isAutohide()) DICT::gui->mainWin->show();
+    if(DICT::cfg->isStartloginshanbay()){
+        DICT::gui->loginWin->show();
+    }else{
+       if(!DICT::cfg->isAutohide()) DICT::gui->mainWin->show();
+    }
+
 
 }
 void Application::captureText(QString text){

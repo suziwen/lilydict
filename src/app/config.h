@@ -68,6 +68,7 @@ public slots:
 private:
     QString username,userpass;
     bool loginshanbay=false,savepass, autologin, autospeak, autoaddword,autorun,autohide,
+    startloginshanbay,
     getscreentext,
     getclipboardtext,
     getselectedtext,
@@ -131,6 +132,9 @@ public:
 
     Q_INVOKABLE bool isAutohide();
     Q_INVOKABLE void setAutohide(bool value);
+
+    Q_INVOKABLE bool isStartloginshanbay();
+    Q_INVOKABLE void setStartloginshanbay(bool value);
 
     Q_INVOKABLE bool isAutoaddword();
     Q_INVOKABLE void setAutoaddword(bool value);

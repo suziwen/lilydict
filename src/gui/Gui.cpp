@@ -34,7 +34,7 @@ void Gui::init(){
     QQmlContext *context = engine->rootContext();
     context->setContextProperty("cfg", DICT::cfg.get());
 
-    engine->load(QUrl(QStringLiteral("qrc:/src/gui/Login.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/Login.qml")));
     loginWin = qobject_cast<QWindow*>(engine->rootObjects().at(0));
     loginWin->setIcon(QIcon(":/img/logo.png"));
 
@@ -53,7 +53,7 @@ void Gui::init(){
     QObject::connect(this,SIGNAL(signalSetLoginWinState(QVariant)),
                      loginWin,SLOT(setState(QVariant)));
 
-    engine->load(QUrl(QStringLiteral("qrc:/src/gui/main.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
     mainWin = qobject_cast<QWindow*>(engine->rootObjects().at(1));
     mainWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
@@ -63,8 +63,6 @@ void Gui::init(){
 #endif
     QObject::connect(mainWin,SIGNAL(signalBtnqueryClick(QString)),
                      this,SIGNAL(signalBtnqueryClick(QString)));
-    QObject::connect(this,SIGNAL(signalShowWord(QVariant)),
-                     mainWin,SLOT(showWord(QVariant)));
 
     QObject::connect(mainWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
                      this,SIGNAL(signalBtnaddwordClick(QString,QString)));
@@ -73,16 +71,14 @@ void Gui::init(){
 
 
 
-    engine->load(QUrl(QStringLiteral("qrc:/src/gui/Balloon.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/Balloon.qml")));
     balloonWin = qobject_cast<QWindow*>(engine->rootObjects().at(2));
-    QObject::connect(this,SIGNAL(signalShowWordInBalloon(QVariant)),
-                     balloonWin,SLOT(showWord(QVariant)));
     QObject::connect(balloonWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
                      this,SIGNAL(signalBtnaddwordClick(QString,QString)));
     QObject::connect(this,SIGNAL(signalAddwordRetBalloon(QVariant)),
                      balloonWin,SLOT(addWordRet(QVariant)));
 
-    engine->load(QUrl(QStringLiteral("qrc:/src/gui/Setup.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/Setup.qml")));
     setupWin = qobject_cast<QWindow*>(engine->rootObjects().at(3));
     setupWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
@@ -91,7 +87,7 @@ void Gui::init(){
     setupWin->setFlags(Qt::WindowStaysOnTopHint);
 #endif
 
-    engine->load(QUrl(QStringLiteral("qrc:/src/gui/About.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/About.qml")));
     aboutWin = qobject_cast<QWindow*>(engine->rootObjects().at(4));
     aboutWin->setIcon(QIcon(":/img/logo.png"));
 }
@@ -114,9 +110,6 @@ bool Gui::mainWinIsVisible(){
     return mainWin->isVisible();
 }
 
-void Gui::showWord(const QString &wordinfo){
-    emit signalShowWord(wordinfo);
-}
 void Gui::addWordRet(const QString &data){
     if(DICT::showType == ShowType::main){
         emit signalAddwordRetMain(data);
@@ -127,11 +120,6 @@ void Gui::addWordRet(const QString &data){
 
 }
 
-void Gui::showWordInBalloon(const QString &wordinfo){
-    balloonWin->setPosition(QCursor::pos()+QPoint(10,15));
-    balloonWin->show();
-    emit signalShowWordInBalloon(wordinfo);
-}
 void Gui::registerClick(){
     QDesktopServices::openUrl(QUrl("http://www.shanbay.com/referral/ref/9e54b69ab8/"));
 }
@@ -142,4 +130,22 @@ void Gui::showSetupWin(){
 
 void Gui::showAboutWin(){
     aboutWin->show();
+}
+
+void Gui::showWord(DictType dictType,const QString &wordinfo){
+    if(dictType==DictType::ShanbayDict){
+        QMetaObject::invokeMethod(mainWin, "showShanbayWord",Q_ARG(QVariant, wordinfo));
+    }else if(dictType==DictType::YoudaoDict){
+        QMetaObject::invokeMethod(mainWin, "showYoudaoWord",Q_ARG(QVariant, wordinfo));
+    }
+}
+void Gui::showWordInBalloon(DictType dictType,const QString &wordinfo){
+    balloonWin->setPosition(QCursor::pos()+QPoint(10,15));
+    balloonWin->show();
+    if(dictType==DictType::ShanbayDict){
+        QMetaObject::invokeMethod(balloonWin, "showShanbayWord",Q_ARG(QVariant, wordinfo));
+    }else if(dictType==DictType::YoudaoDict){
+        QMetaObject::invokeMethod(balloonWin, "showYoudaoWord",Q_ARG(QVariant, wordinfo));
+    }
+
 }

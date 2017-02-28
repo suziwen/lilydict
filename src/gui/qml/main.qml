@@ -10,6 +10,11 @@ Window {
     //flags: Q_OS_WIN ? Qt.Dialog:Qt.WindowStaysOnTopHint
     //flags: Qt.Dialog
     property var voc
+    property string def_en_info: ""
+    property string shanbayWordinfo: ""
+    property string youdaoWordinfo: ""
+    property string shanbaylogo: "<img src='https://static.baydn.com/static/img/shanbay_favicon.png' height='16'/>"
+    property string youdaologo: "<img src='http://dict.youdao.com/favicon.ico' />"
     signal signalBtnqueryClick(string word)
     signal signalBtnaddwordClick(string type,string id)
     //slot
@@ -34,16 +39,35 @@ Window {
             mainForm.btn_addword.tooltip = qsTr("添加进生词库，加入背单词计划");
         }
     }
+    /////////////////////////////
+    function showWord(){
+        mainForm.text_def.text = shanbayWordinfo+youdaoWordinfo + def_en_info ;
+    }
 
-    function showWord(wordstr){
+    function showYoudaoWord(wordinfo){
+        console.log(wordinfo);
+        if(wordinfo===""){
+            youdaoWordinfo="";
+        }else{
+             youdaoWordinfo="<table style='background-Color:White' cellSpacing=1>"+
+             "<tr>"+
+             "<td valign='middle' style='color:grey'>"+youdaologo+"有道</td><td>"+wordinfo+"</td"+
+             "</tr>"+
+             "</table>";
+        }
+        showWord();
+
+    }
+
+    function showShanbayWord(wordstr){
         //console.log("wordstr:"+wordstr);
         var json = JSON.parse(wordstr);
         if(json.status_code !== 0 ){
-            mainForm.word_name.text = json.msg;
+            mainForm.word_name.text = "扇贝"+json.msg;
             mainForm.btn_addword.visible = false;
             mainForm.pronu_us.visible = false;
             mainForm.btn_sound0.visible = mainForm.btn_sound1.visible = false;
-            mainForm.text_def.text = "";
+            mainForm.text_def.text = shanbayWordinfo = def_en_info = "";
             return;
         }
         mainForm.textWord.text = "";
@@ -63,7 +87,7 @@ Window {
         }else{
             mainForm.btn_sound0.visible = mainForm.btn_sound1.visible = false;
         }
-        var def_en_info = "<table style='background-Color:mintcream' cellSpacing=1>";
+        def_en_info = "<table style='background-Color:mintcream' cellSpacing=1>";
         for(var pos in voc.en_definitions){
             //console.log(pos);
             def_en_info += "<tr><td align='right'>"+pos +"</td><td><ol>";
@@ -76,9 +100,16 @@ Window {
             //console.log(def_en_info);
         }
         def_en_info+="</table>"
-        mainForm.text_def.text =voc.definition+ def_en_info ;
+
+        shanbayWordinfo ="<table style='background-Color:SeaShell' cellSpacing=1>"+
+                     "<tr>"+
+                     "<td valign='middle' style='color:grey'>"+shanbaylogo+"扇贝</td><td><ul><li>"+voc.definition+"</li></ul></td"+
+                     "</tr>"+
+                     "</table>";
+        showWord();
         //console.log("wordinfo.definition:"+voc.definition);
     }
+    ///////////////////////////////
     Audio {
             id: playSound0
         }

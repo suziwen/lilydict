@@ -5,14 +5,14 @@
 class QNetworkAccessManager;
 class QNetworkRequest;
 class QNetworkReply;
-class YoudaoNet : public QObject
+class YoudaoDict : public QObject
 {
     Q_OBJECT
 public:
-    explicit YoudaoNet(QObject *parent = 0);
+    explicit YoudaoDict(QObject *parent = 0);
     
 signals:
-    void signalQueryFinished();
+    void signalRetWordinfo(const QString &wordinfo);
 public slots:
     void httpfinished(QNetworkReply*);
 public:

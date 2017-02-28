@@ -18,6 +18,9 @@ Window {
         cb_autohide.onCheckedChanged: {
             cfg.setAutohide(cb_autohide.checked);
         }
+        cb_startloginshanbay.onCheckedChanged: {
+            cfg.setStartloginshanbay(cb_startloginshanbay.checked);
+        }
 
         cb_selectedtext.onCheckedChanged: {
             cfg.setSelectedtext(cb_selectedtext.checked);
@@ -33,6 +36,7 @@ Window {
             cb_selectedtext.checked = cfg.isGetselectedtext();
             cb_clipboardtext.checked = cfg.isGetclipboardtext();
             cb_autohide.checked = cfg.isAutohide();
+            cb_startloginshanbay.checked = cfg.isStartloginshanbay();
         }
 
     }

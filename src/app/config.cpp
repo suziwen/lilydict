@@ -54,7 +54,9 @@ void Config::load(){
 #endif
     showquerylogo=settings_->value("showquerylogo",true).toBool();
     autorun=settings_->value("autorun",false).toBool();
-    autohide=settings_->value("autohide",true).toBool();
+
+    autohide=settings_->value("autohide",false).toBool();
+    startloginshanbay=settings_->value("startloginshanbay",false).toBool();
     autoaddword=settings_->value("autoaddword",false).toBool();
 }
 void Config::save(){
@@ -69,6 +71,7 @@ void Config::save(){
     settings_->setValue("showquerylogo",showquerylogo);
     settings_->setValue("autorun",autorun);
     settings_->setValue("autohide",autohide);
+    settings_->setValue("startloginshanbay",startloginshanbay);
     settings_->setValue("autoaddword",autoaddword);
     settings_->sync();
 }
@@ -111,6 +114,13 @@ void Config::setAutohide(bool value){
     emit signalChange("autohide",value);
 }
 
+bool Config::isStartloginshanbay(){
+    return startloginshanbay;
+}
+void Config::setStartloginshanbay(bool value){
+    startloginshanbay=value;
+    emit signalChange("startloginshanbay",value);
+}
 bool Config::isAutospeak(){
     return autospeak;
 }

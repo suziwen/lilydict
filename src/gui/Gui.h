@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QWindow>
 class QQmlApplicationEngine;
+enum class DictType;
 class Gui : public QObject
 {
     Q_OBJECT
@@ -40,13 +41,9 @@ signals:
     //outer send signal to win
     void signalShowCaptchaImg(const QVariant& url) const;
     void signalSetLoginWinState(const QVariant& str) const;
-
-    void signalShowWord(const QVariant& wordinfo) const;
     void signalAddwordRetMain(const QVariant& data) const;
 
     void signalAddwordRetBalloon(const QVariant& data) const;
-
-    void signalShowWordInBalloon(const QVariant& wordinfo) const;
 
 public slots:
     void registerClick();
@@ -58,10 +55,10 @@ public:
     void hideMainWin();
     bool mainWinIsVisible();
 
-    void showWord(const QString& wordinfo);
     void addWordRet(const QString& data);
 
-    void showWordInBalloon(const QString& wordinfo);
+    void showWord(DictType dictType,const QString& wordinfo);
+    void showWordInBalloon(DictType dictType,const QString& wordinfo);
 
     void showSetupWin();
 

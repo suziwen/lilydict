@@ -4,7 +4,7 @@ TEMPLATE = app
 QT += widgets qml multimedia
 CONFIG += c++14
 #CONFIG += static
-RESOURCES += qml.qrc icons.qrc
+RESOURCES += src/gui/qml/qml.qrc icons.qrc
 RC_FILE = app.rc
 
 CONFIG(debug, debug|release) {
@@ -23,7 +23,7 @@ SOURCES += \
     src/app/application.cpp \
     src/gui/Gui.cpp \
     src/app/config.cpp \
-    src/dict/dictlogo.cpp \
+    src/gui/dictlogo.cpp \
     src/dict/dict.cpp
 HEADERS  += \
     src/dict/shanbaydict.h \
@@ -31,7 +31,7 @@ HEADERS  += \
     src/app/application.h \
     src/gui/Gui.h \
     src/app/config.h \
-    src/dict/dictlogo.h \
+    src/gui/dictlogo.h \
     src/dict/dict.h
 
 win32{

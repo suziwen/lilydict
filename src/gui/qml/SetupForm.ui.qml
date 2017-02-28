@@ -9,13 +9,14 @@ Item {
     property alias cb_autospeak: cb_autospeak
     property alias cb_showlogo: cb_showlogo
     property alias cb_autohide: cb_autohide
+    property alias cb_startloginshanbay: cb_startloginshanbay
     property alias cb_selectedtext: cb_selectedtext
     property alias cb_clipboardtext: cb_clipboardtext
     Rectangle {
         id: rectangle1
         x: 8
         y: 8
-        width: parent.width - 2*x
+        width: parent.width - 2 * x
         height: 90
         color: "#ffffff"
         radius: 0
@@ -64,7 +65,7 @@ Item {
         id: rectangle2
         x: 8
         y: 114
-        width: parent.width - 2*x
+        width: parent.width - 2 * x
         height: 120
         color: "#ffffff"
         radius: 5
@@ -92,6 +93,32 @@ Item {
             y: 68
             width: 100
             text: qsTr("粘贴板取词，选中单词后按“ctrl+c”或者鼠标点右键使用“复制”菜单项")
+        }
+    }
+    Rectangle {
+        id: rectangle3
+        x: 8
+        y: 251
+        width: parent.width - 2 * x
+        height: 90
+        color: "#ffffff"
+        radius: 0
+        border.width: 1
+        border.color: "#f0f0f0"
+
+        Label {
+            x: 15
+            y: 10
+            text: qsTr("功能设置：")
+            font.bold: true
+        }
+
+        CheckBox {
+            id: cb_startloginshanbay
+            x: 30
+            y: 37
+            width: 119
+            text: qsTr("启动时登录扇贝网")
         }
     }
 }
