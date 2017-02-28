@@ -19,31 +19,30 @@
 ** $END_LICENSE$
 **                                                    2016/5/5
 ****************************************************************************/
-#include "shanbaynet.h"
+#include "shanbaydict.h"
 #include <QtNetwork>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
-#include <src/app/application.h>
 const QByteArray user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-ShanbayNet::ShanbayNet(QObject *parent) :
+ShanbayDict::ShanbayDict(QObject *parent) :
     QObject(parent)
 {
     http=new QNetworkAccessManager(this);
     http->setCookieJar(new QNetworkCookieJar(this));
     QObject::connect(http,SIGNAL(finished(QNetworkReply*)),this,SLOT(httpfinished(QNetworkReply*)));
 }
-ShanbayNet::~ShanbayNet(){
+ShanbayDict::~ShanbayDict(){
     // delete http;
 }
 //初始化就是获取session，以及是否需要验证码等信息，为下一步的登录初始化网络连接
-void ShanbayNet::connect(){
+void ShanbayDict::connect(){
     this->state = NetState::connect;
     getSessionid();
 }
 
-void ShanbayNet::getSessionid(){
+void ShanbayDict::getSessionid(){
     QNetworkRequest request;
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setUrl(QUrl("http://www.shanbay.com/web/account/login"));
@@ -58,7 +57,7 @@ void ShanbayNet::getSessionid(){
     httpAction=HttpAction::GetSessionidAction;
     http->get(request);
 }
-void ShanbayNet::refreshCaptchaImg(){
+void ShanbayDict::refreshCaptchaImg(){
     QNetworkRequest request;
     request.setUrl(QUrl("http://www.shanbay.com/api/v1/account/captcha/"));
     request.setRawHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -74,7 +73,7 @@ void ShanbayNet::refreshCaptchaImg(){
     http->get(request);
 }
 
-void ShanbayNet::queryWord(const QString &word){
+void ShanbayDict::queryWord(const QString &word){
     QNetworkRequest request;
     queryword=word;
     //request.setUrl(QUrl("http://www.shanbay.com/api/word/"+word));
@@ -91,7 +90,7 @@ void ShanbayNet::queryWord(const QString &word){
     //qDebug()<<"Query "+word;
     http->get(request);
 }
-void ShanbayNet::queryExamples(QString learningid){
+void ShanbayDict::queryExamples(QString learningid){
     if(learningid=="0"){
         return;
     }
@@ -109,7 +108,7 @@ void ShanbayNet::queryExamples(QString learningid){
     http->get(request);
 }
 
-void ShanbayNet::addWord(const QString &type,const QString& id){
+void ShanbayDict::addWord(const QString &type,const QString& id){
     //type==add id is object_id 否则 id is learning_id标示我忘了
     QNetworkRequest request;
     request.setRawHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -148,7 +147,7 @@ void ShanbayNet::addWord(const QString &type,const QString& id){
     //    http->get(request);
 
 }
-void ShanbayNet::addExample(QString learning_id,QString sentence, QString translation){
+void ShanbayDict::addExample(QString learning_id,QString sentence, QString translation){
     if(learning_id.isNull()||learning_id=="0"){
         emit signalAddExampleFinished("单词没有在你的单词库中，现在不能为该单词添加例句");
         return;
@@ -174,14 +173,14 @@ void ShanbayNet::addExample(QString learning_id,QString sentence, QString transl
     http->get(request);
 }
 
-void ShanbayNet::login(const QString &u,const QString &p,const QString &c){
+void ShanbayDict::login(const QString &u,const QString &p,const QString &c){
     username=u;
     password=p;
     captcha.code=c;
     loginShanbay();
     //getSessionid();
 }
-void ShanbayNet::loginShanbay(){
+void ShanbayDict::loginShanbay(){
     QNetworkRequest request;
     request.setUrl(QUrl("http://www.shanbay.com/api/v1/account/login/web/"));
     request.setRawHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -211,7 +210,7 @@ void ShanbayNet::loginShanbay(){
     httpAction=HttpAction::LoginAction;
     http->put(request,postData);
 }
-void ShanbayNet::Captcha::parseHtml(const QString& html){
+void ShanbayDict::Captcha::parseHtml(const QString& html){
     clear();
     int pos=html.indexOf("captcha_0");
     if(pos>0){
@@ -222,12 +221,12 @@ void ShanbayNet::Captcha::parseHtml(const QString& html){
     }
 }
 
-void ShanbayNet::httpfinished(QNetworkReply* reply){
+void ShanbayDict::httpfinished(QNetworkReply* reply){
     if(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString().isEmpty()){
         qDebug()<<QString::fromUtf8(reply->readAll());
     }
     //qDebug()<<QString::fromUtf8(reply->readAll());
-    qDebug()<<"Http request finished!"<<reply->error()<<reply->errorString()<<reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()<<reply->url();
+    //qDebug()<<"Http request finished!"<<reply->error()<<reply->errorString()<<reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()<<reply->url();
     QJsonDocument jsonDoc;
     QJsonObject jsonObj,vocObj,en_definitionsObj;
     QString html;
@@ -237,17 +236,17 @@ void ShanbayNet::httpfinished(QNetworkReply* reply){
     case HttpAction::NoAction:
         break;
     case HttpAction::GetSessionidAction:
-        sessionid=getCookie("csrftoken");
+        //sessionid=getCookie("csrftoken");//sessionid已经不在使用
         //qDebug()<<"sessionid="<<sessionid<<replData;
-        if(sessionidOk()){
-            this->state = NetState::login;
-            html=QString::fromUtf8(replData);
-            //qDebug()<<html;
-            captcha.parseHtml(html);
-            if(captcha.isneed()){
-                emit signalShowCaptcha();
-            }
+        //if(sessionidOk()){
+        this->state = NetState::login;
+        html=QString::fromUtf8(replData);
+        //qDebug()<<html;
+        captcha.parseHtml(html);
+        if(captcha.isneed()){
+            emit signalShowCaptcha();
         }
+        //}
         emit signalConnectFinished();
         break;
     case HttpAction::RefreshCaptchaImg:
@@ -410,7 +409,7 @@ void ShanbayNet::httpfinished(QNetworkReply* reply){
     }
 
 }
-QString ShanbayNet::getCookie(const QString &name){
+QString ShanbayDict::getCookie(const QString &name){
     qDebug()<<"get cookie";
     foreach(QNetworkCookie cookie , http->cookieJar()->cookiesForUrl(QUrl("http://www.shanbay.com"))){
         qDebug()<<cookie.name();

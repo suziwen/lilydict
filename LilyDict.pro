@@ -18,17 +18,21 @@ QML_IMPORT_PATH =
 INCLUDEPATH += src
 SOURCES += \
     src/main.cpp \
-    src/net/shanbaynet.cpp \
+    src/dict/shanbaydict.cpp \
+    src/dict/youdaodict.cpp \
     src/app/application.cpp \
     src/gui/Gui.cpp \
     src/app/config.cpp \
-    src/app/dictlogo.cpp
+    src/dict/dictlogo.cpp \
+    src/dict/dict.cpp
 HEADERS  += \
-    src/net/shanbaynet.h \
+    src/dict/shanbaydict.h \
+    src/dict/youdaodict.h \
     src/app/application.h \
     src/gui/Gui.h \
     src/app/config.h \
-    src/app/dictlogo.h
+    src/dict/dictlogo.h \
+    src/dict/dict.h
 
 win32{
 

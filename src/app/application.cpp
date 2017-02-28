@@ -27,93 +27,10 @@
 #include <QMimeData>
 #include <QThread>
 #include "app/application.h"
-
-std::unique_ptr<Application> DICT::app = std::make_unique<Application>();
-std::unique_ptr<Gui> DICT::gui = std::make_unique<Gui>();
-std::unique_ptr<ShanbayNet> DICT::shanbayNet;// = std::make_unique<ShanbayNet>();
-std::unique_ptr<Config> DICT::cfg = std::make_unique<Config>();
-Dictlogo* DICT::logo;
+#include <dict/dict.h>
 Application::Application(){
 }
 
-void Application::init(){
-
-    DICT::logo = new Dictlogo();
-    QObject::connect(DICT::logo,&Dictlogo::Clicked,
-                     [&](){
-        //qDebug()<<"logo clicked:"<<capture_text;
-        DICT::shanbayNet->queryWord(capture_text);
-    });
-
-    DICT::gui->init();
-    DICT::shanbayNet = std::make_unique<ShanbayNet>();
-    DICT::shanbayNet->connect();
-
-    QObject::connect(DICT::shanbayNet.get(),&ShanbayNet::signalConnectFinished,[&](){
-        if(DICT::shanbayNet->state!=ShanbayNet::NetState::login){
-            DICT::gui->setLoginWinState("无法连接扇贝网，请稍后重试");
-            return;
-        }
-        DICT::gui->setLoginWinState("已连接扇贝网，请输入用户名和密码登录!");
-    });
-    QObject::connect(DICT::shanbayNet.get(),&ShanbayNet::signalShowCaptcha,
-                     [&](){
-        //qDebug()<<DICT::shanbayNet->captcha.id<<DICT::shanbayNet->captcha.url;
-        DICT::gui->showCaptchaImg(DICT::shanbayNet->captcha.url);
-
-    });
-    QObject::connect(DICT::gui.get(), &Gui::signalLoginClick,
-                     [&](const QString username,QString password,QString captchacode){
-        //qDebug()<<"loginClick:"<<username <<password<<captchacode;
-        DICT::shanbayNet->login(username,password,captchacode);
-
-    });
-    QObject::connect(DICT::gui.get(),&Gui::signalFreshCaptchaImg,
-                     [&](){
-        //qDebug()<<"require fresh captcha img";
-        DICT::shanbayNet->refreshCaptchaImg();
-    });
-    QObject::connect(DICT::shanbayNet.get(),&ShanbayNet::signalLoginFinished,
-                     [&](bool ok,const QString& msg){
-        if(ok){
-            DICT::gui->loginWin->hide();
-            if(!DICT::cfg->isAutohide()) DICT::gui->mainWin->show();
-            DICT::cfg->setUsername(DICT::shanbayNet->username);
-            if(DICT::cfg->isSavepass()) DICT::cfg->setUserpass(DICT::shanbayNet->password);
-            loginshanbayAction->setChecked(true);
-            DICT::cfg->setLoginshanbay(true);
-            //setScreenText();
-            //showSystrayIcon();
-        }else{
-            DICT::gui->setLoginWinState(msg);
-        }
-    });
-
-    QObject::connect(DICT::gui.get(),&Gui::signalBtnqueryClick,
-                     [&](const QString word){
-        showType = ShowType::main;
-        DICT::shanbayNet->queryWord(word);
-    });
-    QObject::connect(DICT::shanbayNet.get(),&ShanbayNet::signalRetWordinfo,
-                     [&](const QString& wordinfo){
-        if(showType == ShowType::main){
-            DICT::gui->showWord(wordinfo);
-        }else{
-            DICT::gui->showWordInBalloon(wordinfo);
-        }
-    });
-
-    QObject::connect(DICT::gui.get(),&Gui::signalBtnaddwordClick,
-                     [&](const QString type,const QString id){
-        DICT::shanbayNet->addWord(type,id);
-    });
-    QObject::connect(DICT::shanbayNet.get(),&ShanbayNet::signalAddwordFinished,
-                     [&](const QString&data){
-        DICT::gui->addWordRet(showType,data);
-    });
-
-    //QObject::connect(qApp,&QApplication::aboutToQuit,[&](){close();});
-}
 void Application::close(){
     closeSystrayIcon();
 }
@@ -222,7 +139,7 @@ void Application::closeSystrayIcon(){
 
 void Application::run(){
 
-    init();
+    DICT::init();
     setScreenText();
     showSystrayIcon();
     if(!DICT::cfg->isAutohide()) DICT::gui->mainWin->show();
@@ -231,12 +148,12 @@ void Application::run(){
 void Application::captureText(QString text){
     capture_text = text.trimmed();
     if(capture_text.isEmpty()||capture_text.length()>20) return;
-    showType = ShowType::balloon;
+    DICT::showType = ShowType::balloon;
     if(DICT::cfg->isShowquerylogo()){
         DICT::logo->popup();
         return;
     }
-    DICT::shanbayNet->queryWord(capture_text);
+    DICT::queryWord(capture_text);
 }
 
 void Application::setScreenText(){

@@ -19,20 +19,20 @@
 ** $END_LICENSE$
 **                                                    2016/5/5
 ****************************************************************************/
-#ifndef SHANBAYNET_H
-#define SHANBAYNET_H
+#ifndef SHANBAYDICT_H
+#define SHANBAYDICT_H
 #include <QObject>
 
 class QNetworkAccessManager;
 class QNetworkRequest;
 class QNetworkReply;
 
-class ShanbayNet : public QObject
+class ShanbayDict : public QObject
 {
     Q_OBJECT
 public:
-    explicit ShanbayNet(QObject *parent = 0);
-    ~ShanbayNet();
+    explicit ShanbayDict(QObject *parent = 0);
+    ~ShanbayDict();
     enum class HttpAction{NoAction,GetSessionidAction,RefreshCaptchaImg,LoginAction,QueryWordAction,AddWordAction,AddExampleAction,QueryWordExamplesAction};
     enum class NetState{connect,login,ok};
 signals:
@@ -83,4 +83,4 @@ private:
     QString sessionid;
 };
 
-#endif // SHANBAYNET_H
+#endif // SHANBAYDICT_H

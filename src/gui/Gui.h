@@ -23,7 +23,6 @@
 #define GUI_H
 #include <QObject>
 #include <QWindow>
-#include <app/application.h>
 class QQmlApplicationEngine;
 class Gui : public QObject
 {
@@ -60,7 +59,7 @@ public:
     bool mainWinIsVisible();
 
     void showWord(const QString& wordinfo);
-    void addWordRet(const ShowType type,const QString& data);
+    void addWordRet(const QString& data);
 
     void showWordInBalloon(const QString& wordinfo);
 
@@ -76,7 +75,4 @@ private:
     QQmlApplicationEngine *engine;
 
 };
-namespace DICT{
-extern std::unique_ptr<Gui> gui;
-}
 #endif // GUI_H

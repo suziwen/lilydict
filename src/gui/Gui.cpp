@@ -22,6 +22,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QDesktopServices>
+#include <dict/dict.h>
 #include "Gui.h"
 Gui::Gui(QObject *parent) : QObject(parent)
 {
@@ -116,10 +117,10 @@ bool Gui::mainWinIsVisible(){
 void Gui::showWord(const QString &wordinfo){
     emit signalShowWord(wordinfo);
 }
-void Gui::addWordRet(const ShowType type,const QString &data){
-    if(type==ShowType::main){
+void Gui::addWordRet(const QString &data){
+    if(DICT::showType == ShowType::main){
         emit signalAddwordRetMain(data);
-    }else if(type==ShowType::balloon){
+    }else if(DICT::showType ==ShowType::balloon){
         qDebug()<<"balloon add word ret";
         emit signalAddwordRetBalloon(data);
     }

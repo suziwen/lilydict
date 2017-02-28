@@ -24,7 +24,7 @@ Window {
         winInfo.showinfo(voc.content+qsTr("  已加入扇贝网生词本,列入背单词计划。"));
     }
     function showWord(wordstr){
-        window.requestActivate();        //console.log("wordstr:"+wordstr);
+        window.requestActivate();        console.log("wordstr:"+wordstr);
         var json = JSON.parse(wordstr);
         if(json.status_code !== 0 ){
             mainForm.word_name.text = json.msg;

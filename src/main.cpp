@@ -20,7 +20,7 @@
 **                                                    2016/5/5
 ****************************************************************************/
 #include <QApplication>
-#include "app/application.h"
+#include <dict/dict.h>
 
 int main(int argc, char *argv[])
 {

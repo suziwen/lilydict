@@ -21,7 +21,6 @@
 ****************************************************************************/
 #ifndef DICTLOGO_H
 #define DICTLOGO_H
-
 #include <QLabel>
 #include <QMouseEvent>
 #include <QTimer>
