@@ -34,7 +34,7 @@ void Gui::init(){
     QQmlContext *context = engine->rootContext();
     context->setContextProperty("cfg", DICT::cfg.get());
 
-    engine->load(QUrl(QStringLiteral("qrc:/Login.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/qml/Login.qml")));
     loginWin = qobject_cast<QWindow*>(engine->rootObjects().at(0));
     loginWin->setIcon(QIcon(":/img/logo.png"));
 
@@ -53,7 +53,7 @@ void Gui::init(){
     QObject::connect(this,SIGNAL(signalSetLoginWinState(QVariant)),
                      loginWin,SLOT(setState(QVariant)));
 
-    engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     mainWin = qobject_cast<QWindow*>(engine->rootObjects().at(1));
     mainWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
@@ -71,14 +71,14 @@ void Gui::init(){
 
 
 
-    engine->load(QUrl(QStringLiteral("qrc:/Balloon.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/qml/Balloon.qml")));
     balloonWin = qobject_cast<QWindow*>(engine->rootObjects().at(2));
     QObject::connect(balloonWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
                      this,SIGNAL(signalBtnaddwordClick(QString,QString)));
     QObject::connect(this,SIGNAL(signalAddwordRetBalloon(QVariant)),
                      balloonWin,SLOT(addWordRet(QVariant)));
 
-    engine->load(QUrl(QStringLiteral("qrc:/Setup.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/qml/Setup.qml")));
     setupWin = qobject_cast<QWindow*>(engine->rootObjects().at(3));
     setupWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
@@ -87,7 +87,7 @@ void Gui::init(){
     setupWin->setFlags(Qt::WindowStaysOnTopHint);
 #endif
 
-    engine->load(QUrl(QStringLiteral("qrc:/About.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/qml/About.qml")));
     aboutWin = qobject_cast<QWindow*>(engine->rootObjects().at(4));
     aboutWin->setIcon(QIcon(":/img/logo.png"));
 }

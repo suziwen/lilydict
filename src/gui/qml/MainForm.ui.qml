@@ -24,7 +24,7 @@ Rectangle {
         height: 32
         text: ""
         opacity: 0.9
-        font.pointSize: 18
+        font.pointSize: 15
         placeholderText: qsTr("Input English Word")
         style: TextFieldStyle {
             textColor: "black"
@@ -44,7 +44,6 @@ Rectangle {
         text: qsTr("查询")
     }
 
-
     RowLayout {
         id: rowLayout_pronu
         x: 8
@@ -55,12 +54,12 @@ Rectangle {
         Text {
             id: word_name
             text: qsTr("Text")
-            font.family: "Courier"
+            font.family: "Arial"
             style: Text.Normal
             font.bold: true
             color:'#209e85'
             verticalAlignment: Text.AlignBottom
-            font.pixelSize: 18
+            font.pixelSize: 21
         }
         Text {
             visible: pronu_us.visible
@@ -122,5 +121,4 @@ Rectangle {
         wrapMode: Text.WrapAnywhere
         font.pixelSize: 15
     }
-
 }

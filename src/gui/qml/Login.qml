@@ -63,15 +63,20 @@ Window {
             if(loginForm.btn_login.enabled) signalLoginClick(username.text,password.text,captcha_code.text);
         }
     }
-   WinInfo{
-       id: winInfo
-   }
+    WinInfo{
+        id: winInfo
+    }
     Component.onCompleted: {
         setX(Screen.width / 2 - width / 2);
         setY(Screen.height / 2 - height / 2);
         loginForm.username.text = cfg.getUsername();
         loginForm.password.text = cfg.getUserpass();
         loginForm.checkBox_savepass.checked=cfg.isSavepass();
+    }
+    onClosing:{
+        //console.log("main windows is closing");
+        visible = false;
+        close.accepted = false;
     }
 
 }

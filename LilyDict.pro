@@ -4,7 +4,7 @@ TEMPLATE = app
 QT += widgets qml multimedia
 CONFIG += c++14
 #CONFIG += static
-RESOURCES += src/gui/qml/qml.qrc icons.qrc
+RESOURCES += src/gui/qml.qrc src/gui/icon.qrc
 RC_FILE = app.rc
 
 CONFIG(debug, debug|release) {

@@ -26,6 +26,7 @@
         <file>img/add0.png</file>
         <file>img/add1.png</file>
         <file>img/shanbay.ico</file>
-	<file>img/app.ico</file>
+        <file>img/app.ico</file>
+        <file>img/youdao.ico</file>
     </qresource>
 </RCC>

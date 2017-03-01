@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MainForm.ui.qml</file>
+        <file>qml/Login.qml</file>
+        <file>qml/LoginForm.ui.qml</file>
+        <file>qml/ScrollBar.qml</file>
+        <file>qml/Balloon.qml</file>
+        <file>qml/BalloonForm.ui.qml</file>
+        <file>qml/WinInfo.qml</file>
+        <file>qml/Setup.qml</file>
+        <file>qml/SetupForm.ui.qml</file>
+        <file>qml/About.qml</file>
+        <file>qml/AboutForm.ui.qml</file>
+        <file>qml/Dict.qml</file>
+    </qresource>
+</RCC>

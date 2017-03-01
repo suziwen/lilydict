@@ -98,7 +98,7 @@ void Application::showSystrayIcon(){
         }
     });
 
-    QObject::connect(aboutAction,&QAction::triggered,[&](){DICT::gui->showAboutWin();});
+    QObject::connect(aboutAction,&QAction::triggered,[&](){DICT::gui->showAboutWin();DICT::gui->hideMainWin();});
     QObject::connect(quitAction,&QAction::triggered,[&](){close();qApp->quit();});
     QObject::connect(cfgAction,&QAction::triggered,
                      [&](){

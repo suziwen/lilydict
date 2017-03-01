@@ -1,10 +1,14 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 Window {
+    id:window
     width: 630
     height: 360
     //flags: Q_OS_WIN ? Qt.Dialog:Qt.WindowStaysOnTopHint
     SetupForm {
+        btn_return.onClicked: {
+            window.close();
+        }
         cb_screentext.onCheckedChanged: {
             cfg.setScreentext(cb_screentext.checked);
 

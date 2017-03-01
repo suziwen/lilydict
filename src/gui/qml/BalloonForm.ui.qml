@@ -17,7 +17,7 @@ Rectangle {
     RowLayout {
         id: rowLayout_pronu
         x: 8
-        y: 21
+        y: 10
         height: 21
         Text {
             id: word_name

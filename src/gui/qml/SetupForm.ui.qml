@@ -5,6 +5,7 @@ Item {
     y: 0
     width: 600
     height: 400
+    property alias btn_return: btn_return
     property alias cb_screentext: cb_screentext
     property alias cb_autospeak: cb_autospeak
     property alias cb_showlogo: cb_showlogo
@@ -69,6 +70,7 @@ Item {
         height: 120
         color: "#ffffff"
         radius: 5
+        z: -2
         border.width: 1
         border.color: "#f0f0f0"
 
@@ -99,7 +101,7 @@ Item {
         id: rectangle3
         x: 8
         y: 251
-        width: parent.width - 2 * x
+        width: 450
         height: 90
         color: "#ffffff"
         radius: 0
@@ -109,8 +111,10 @@ Item {
         Label {
             x: 15
             y: 10
-            text: qsTr("功能设置：")
+            text: qsTr("其它设置：")
             font.bold: true
+
+
         }
 
         CheckBox {
@@ -120,5 +124,21 @@ Item {
             width: 119
             text: qsTr("启动时登录扇贝网")
         }
+    }
+
+    Button {
+        id: btn_return
+        x: 495
+        y: 290
+        text: qsTr("确定")
+    }
+    Image {
+        id: image
+        x: 485
+        y: 193
+        width: 100
+        height: 100
+        z: -1
+        source: "qrc:/img/logo.png"
     }
 }

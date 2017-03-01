@@ -38,7 +38,7 @@ void YoudaoDict::httpfinished(QNetworkReply* reply){
         wordinfo.clear();
     }
 
-    qDebug()<<reply->errorString()<<" wordinfo:"<<wordinfo;
+    //qDebug()<<reply->errorString()<<" wordinfo:"<<wordinfo;
     emit signalRetWordinfo(wordinfo);
 //    QJsonDocument jsonDoc;
 //    QJsonObject jsonObj,basicObj;

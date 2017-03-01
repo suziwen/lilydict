@@ -12,4 +12,13 @@ Item {
         text: qsTr("Label")
         textFormat: Text.RichText
     }
+
+    Image {
+        id: image
+        x: 433
+        y: 34
+        width: 100
+        height: 100
+        source: "qrc:/img/logo.png"
+    }
 }
