@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 QtObject {
     property string shanbaylogo: "<div style='color:grey;'><img src='qrc:////img/shanbay.ico' height='20'/>扇贝</div>"
-    property string youdaologo: "<div style='color:grey;'><img src='qrc:////img/youdao.ico' height='20'><span style='margin-bottom:13px'>有道</span></div>"
+    property string youdaologo: "<div style='background-Color:gray;color:grey;'><img src='qrc:////img/youdao.ico' height='20'><span style='margin-bottom:13px'>有道</span></div>"
     property string def_en_info:""
     property string shanbayWordinfo: ""
     property string youdaoWordinfo: ""
@@ -13,9 +13,9 @@ QtObject {
         if(wordinfo===""){
             youdaoWordinfo="";
         }else{
-             youdaoWordinfo="<table style='background-Color:"+youdaocolor+"' cellSpacing=1>"+
+             youdaoWordinfo="<table style='background-color:"+youdaocolor+"' cellSpacing=1>"+
              "<tr>"+
-             "<td valign='middle'>"+youdaologo+"</td><td>"+wordinfo+"</td"+
+             "<td valign='top'>"+youdaologo+"</td><td>"+wordinfo+"</td"+
              "</tr>"+
              "</table>";
         }

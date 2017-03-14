@@ -31,7 +31,7 @@ Dictlogo::Dictlogo(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint|Qt::ToolTip);
 #endif
     setGeometry(0,0,32,32);
-    setPixmap(QPixmap(":/img/app.ico").scaled(QSize(32,32), Qt::IgnoreAspectRatio));
+    setPixmap(QPixmap(":/img/app1.ico").scaled(QSize(32,32), Qt::IgnoreAspectRatio));
     timer=new QTimer();
     connect(timer,SIGNAL(timeout()), this, SLOT(autohide()));
 }
