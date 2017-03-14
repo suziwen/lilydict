@@ -1,8 +1,8 @@
 import QtQuick 2.0
 
 QtObject {
-    property string shanbaylogo: "<div style='color:grey;'><img src='qrc:////img/shanbay.ico' height='20'/>扇贝</div>"
-    property string youdaologo: "<div style='background-Color:gray;color:grey;'><img src='qrc:////img/youdao.ico' height='20'><span style='margin-bottom:13px'>有道</span></div>"
+    property string shanbaylogo: "<div style='color:grey;'><img src='qrc:////img/shanbay.ico' height='11'/>扇贝</div>"
+    property string youdaologo: "<div style='background-Color:gray;color:grey;'><img src='qrc:////img/youdao.ico' height='11'>有道</div>"
     property string def_en_info:""
     property string shanbayWordinfo: ""
     property string youdaoWordinfo: ""
