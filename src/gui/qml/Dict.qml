@@ -13,9 +13,9 @@ QtObject {
         if(wordinfo===""){
             youdaoWordinfo="";
         }else{
-             youdaoWordinfo="<table style='background-color:"+youdaocolor+"' cellSpacing=1>"+
+             youdaoWordinfo="<table style='background-color:"+youdaocolor+"' cellSpacing=0>"+
              "<tr>"+
-             "<td valign='top'>"+youdaologo+"</td><td>"+wordinfo+"</td"+
+             "<td valign='top'>"+youdaologo+"</td><td>"+wordinfo+"</td>"+
              "</tr>"+
              "</table>";
         }
@@ -63,7 +63,7 @@ QtObject {
 
         dict.shanbayWordinfo ="<table style='background-Color:"+dict.shanbaycolor+"' cellSpacing=1>"+
                      "<tr>"+
-                     "<td valign='middle'>"+dict.shanbaylogo+"</td><td><ul><li>"+voc.definition+"</li></ul></td"+
+                     "<td valign='middle'>"+dict.shanbaylogo+"</td><td><ul><li>"+voc.definition+"</li></ul></td>"+
                      "</tr>"+
                      "</table>";
     }

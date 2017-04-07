@@ -78,7 +78,8 @@ private:
     void save();
 public:
     //百合词典版本信息
-    QString versioninformation=QObject::tr("百合词典1.0.0");
+    QString version = "1.0.0";
+    QString versioninformation=QObject::tr("百合词典%1").arg(version);
     //所有使用本软件全部或者部分代码的程序设计人员请保留lience信息，并在所发布的软件关于窗口中进行显示。
     QString licenceinformation=QObject::tr("<h2>%1</h2>"
                                          "百合词典依据<a href='http://www.shanbay.com'><b>扇贝网</b></a>、<a href='http://dict.youdao.com/'><b>有道词典</b></a>公开的API设计。<br>"

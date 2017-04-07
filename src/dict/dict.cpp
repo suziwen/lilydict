@@ -1,3 +1,10 @@
+#include <QVersionNumber>
+#include <QTimer>
+#include <QtNetwork>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 #include "dict.h"
 std::unique_ptr<Application> DICT::app = std::make_unique<Application>();
 std::unique_ptr<Gui> DICT::gui = std::make_unique<Gui>();
@@ -100,5 +107,32 @@ void DICT::init(){
     QObject::connect(DICT::shanbayDict.get(),&ShanbayDict::signalAddwordFinished,
                      [&](const QString&data){
         DICT::gui->addWordRet(data);
+    });
+    //获取版本信息，提示升级
+    QTimer::singleShot(6000, [](){
+        qDebug()<<"delay 6 second--------------------";
+        QNetworkAccessManager *manager = new QNetworkAccessManager(qApp);
+        QObject::connect(manager, &QNetworkAccessManager::finished,
+                [](QNetworkReply* reply){
+            auto replData=reply->readAll();
+            auto jsonDoc=QJsonDocument::fromJson(replData);
+            if(!jsonDoc.isNull()){
+                auto jsonObj=jsonDoc.object();
+                auto ok=jsonObj.value("ok").toBool();
+                if(ok){
+                    auto version=jsonObj.value("version").toString();
+                    auto v1 = QVersionNumber::fromString(version);
+                    auto v2 = QVersionNumber::fromString(DICT::cfg->version);
+                    if(v1>v2){
+                        auto url = jsonObj.value("url").toString();
+                        auto message = jsonObj.value("message").toString();
+                        qDebug()<<version<<url<<message<<v2<< (v1>v2);
+                        DICT::gui->showUpgradeWin(message,url);
+                    }
+
+                }
+            }
+        });
+        manager->get(QNetworkRequest(QUrl("http://www.lieefu.com/api/lilydict/version")));
     });
 }

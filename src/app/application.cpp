@@ -25,8 +25,6 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
-#include <QTimer>
-#include <QtNetwork>
 #include "app/application.h"
 #include <dict/dict.h>
 Application::Application(){
@@ -99,7 +97,7 @@ void Application::showSystrayIcon(){
         }
     });
 
-    QObject::connect(aboutAction,&QAction::triggered,[&](){DICT::gui->showAboutWin();DICT::gui->hideMainWin();});
+    QObject::connect(aboutAction,&QAction::triggered,[&](){DICT::gui->showAboutWin();});
     QObject::connect(quitAction,&QAction::triggered,[&](){close();qApp->quit();});
     QObject::connect(cfgAction,&QAction::triggered,
                      [&](){
@@ -149,16 +147,7 @@ void Application::run(){
     }
     if(DICT::cfg->isAutohide()) return;
     DICT::gui->mainWin->show();
-    QTimer::singleShot(6000, [](){
-        qDebug()<<"delay 10 second--------------------";
-        QNetworkAccessManager *manager = new QNetworkAccessManager(qApp);
-        QObject::connect(manager, &QNetworkAccessManager::finished,
-                [](QNetworkReply* reply){
-            qDebug()<<reply->readAll();
-        });
 
-        manager->get(QNetworkRequest(QUrl("http://www.lieefu.com/lilydict/version")));
-    });
 
 }
 void Application::captureText(QString text){

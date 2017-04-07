@@ -63,6 +63,7 @@ public:
     void showSetupWin();
 
     void showAboutWin();
+    void showUpgradeWin(const QString& msg,const QString& url);
     QWindow* loginWin;
     QWindow* mainWin;
     QWindow* balloonWin;

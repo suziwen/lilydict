@@ -13,5 +13,7 @@
         <file>qml/About.qml</file>
         <file>qml/AboutForm.ui.qml</file>
         <file>qml/Dict.qml</file>
+        <file>qml/Upgrade.qml</file>
+        <file>qml/UpgradeForm.ui.qml</file>
     </qresource>
 </RCC>

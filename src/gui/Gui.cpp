@@ -54,7 +54,7 @@ void Gui::init(){
                      loginWin,SLOT(setState(QVariant)));
 
     engine->load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    mainWin = qobject_cast<QWindow*>(engine->rootObjects().at(1));
+    mainWin = qobject_cast<QWindow*>(engine->rootObjects().last());
     mainWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
     mainWin->setFlags(Qt::Dialog);
@@ -72,14 +72,14 @@ void Gui::init(){
 
 
     engine->load(QUrl(QStringLiteral("qrc:/qml/Balloon.qml")));
-    balloonWin = qobject_cast<QWindow*>(engine->rootObjects().at(2));
+    balloonWin = qobject_cast<QWindow*>(engine->rootObjects().last());
     QObject::connect(balloonWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
                      this,SIGNAL(signalBtnaddwordClick(QString,QString)));
     QObject::connect(this,SIGNAL(signalAddwordRetBalloon(QVariant)),
                      balloonWin,SLOT(addWordRet(QVariant)));
 
     engine->load(QUrl(QStringLiteral("qrc:/qml/Setup.qml")));
-    setupWin = qobject_cast<QWindow*>(engine->rootObjects().at(3));
+    setupWin = qobject_cast<QWindow*>(engine->rootObjects().last());
     setupWin->setIcon(QIcon(":/img/logo.png"));
 #ifdef Q_OS_WIN
     setupWin->setFlags(Qt::Dialog);
@@ -88,7 +88,7 @@ void Gui::init(){
 #endif
 
     engine->load(QUrl(QStringLiteral("qrc:/qml/About.qml")));
-    aboutWin = qobject_cast<QWindow*>(engine->rootObjects().at(4));
+    aboutWin = qobject_cast<QWindow*>(engine->rootObjects().last());
     aboutWin->setIcon(QIcon(":/img/logo.png"));
 }
 //loginWin
@@ -130,6 +130,7 @@ void Gui::showSetupWin(){
 
 void Gui::showAboutWin(){
     aboutWin->show();
+    hideMainWin();
 }
 
 void Gui::showWord(DictType dictType,const QString &wordinfo){
@@ -147,5 +148,11 @@ void Gui::showWordInBalloon(DictType dictType,const QString &wordinfo){
     }else if(dictType==DictType::YoudaoDict){
         QMetaObject::invokeMethod(balloonWin, "showYoudaoWord",Q_ARG(QVariant, wordinfo));
     }
-
+}
+void Gui::showUpgradeWin(const QString &msg, const QString &url){
+    engine->load(QUrl(QStringLiteral("qrc:/qml/Upgrade.qml")));
+    auto upgradeWin = qobject_cast<QWindow*>(engine->rootObjects().last());
+    upgradeWin->setIcon(QIcon(":/img/logo.png"));
+    QMetaObject::invokeMethod(upgradeWin, "showMsg",Q_ARG(QVariant, msg),Q_ARG(QVariant, url));
+    hideMainWin();
 }
