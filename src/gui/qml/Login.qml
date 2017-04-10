@@ -65,6 +65,7 @@ Window {
     }
     WinInfo{
         id: winInfo
+        text:""
     }
     Component.onCompleted: {
         setX(Screen.width / 2 - width / 2);

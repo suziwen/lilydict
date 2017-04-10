@@ -51,6 +51,7 @@ public:
     void init();
     void showCaptchaImg(const QString& url);
     void setLoginWinState(const QString& str);
+    void showLoginWin();
     void showMainWin();
     void hideMainWin();
     bool mainWinIsVisible();
@@ -64,11 +65,11 @@ public:
 
     void showAboutWin();
     void showUpgradeWin(const QString& msg,const QString& url);
-    QWindow* loginWin;
-    QWindow* mainWin;
-    QWindow* balloonWin;
-    QWindow* setupWin;
-    QWindow* aboutWin;
+    QWindow* loginWin=nullptr;
+    QWindow* mainWin=nullptr;
+    QWindow* balloonWin=nullptr;
+    QWindow* setupWin=nullptr;
+    QWindow* aboutWin=nullptr;
 private:
     QQmlApplicationEngine *engine;
 

@@ -10,11 +10,11 @@ Item {
     property alias btn_register: btn_register
     property alias username: username
     property alias password: password
-    property alias captcha_code:captcha_code
-    property alias captcha_img:captcha_img
-    property alias captcha_img_mousearea:captcha_img_mousearea
+    property alias captcha_code: captcha_code
+    property alias captcha_img: captcha_img
+    property alias captcha_img_mousearea: captcha_img_mousearea
     property alias checkBox_savepass: checkBox_savepass
-    property alias row1:row1
+    property alias row1: row1
     Label {
         id: label1
         x: 13
@@ -78,7 +78,7 @@ Item {
 
             TextField {
                 id: captcha_code
-                height:41
+                height: 41
                 anchors.verticalCenter: parent.verticalCenter
                 width: 210
                 placeholderText: qsTr("点击图片换一幅")
@@ -88,7 +88,7 @@ Item {
                 width: 166
                 height: 50
                 source: ""
-                MouseArea{
+                MouseArea {
                     id: captcha_img_mousearea
                     height: 50
                     anchors.fill: parent
@@ -96,7 +96,7 @@ Item {
                 }
             }
         }
-        Row{
+        Row {
             id: row2
             spacing: 60
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -105,7 +105,7 @@ Item {
                 width: 90
                 height: 30
                 text: qsTr("登录")
-                enabled: false
+                enabled: true
                 anchors.verticalCenter: parent.verticalCenter
                 style: ButtonStyle {
                     label: Text {
@@ -117,7 +117,7 @@ Item {
                         font.bold: true
                         font.pointSize: 12
                         text: control.text
-                        color: control.enabled ? "black":"gray"
+                        color: control.enabled ? "black" : "gray"
                     }
                     background: Rectangle {
                         implicitWidth: 100
@@ -126,8 +126,14 @@ Item {
                         border.color: "#888"
                         radius: 5
                         gradient: Gradient {
-                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                            GradientStop {
+                                position: 0
+                                color: control.pressed ? "#ccc" : "#eee"
+                            }
+                            GradientStop {
+                                position: 1
+                                color: control.pressed ? "#aaa" : "#ccc"
+                            }
                         }
                     }
                 }

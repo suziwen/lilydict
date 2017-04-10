@@ -28,18 +28,17 @@
 const QByteArray user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
 ShanbayDict::ShanbayDict(QObject *parent) :
     QObject(parent)
-{
-    http=new QNetworkAccessManager(this);
-    http->setCookieJar(new QNetworkCookieJar(this));
-    QObject::connect(http,SIGNAL(finished(QNetworkReply*)),this,SLOT(httpfinished(QNetworkReply*)));
-}
+{}
 ShanbayDict::~ShanbayDict(){
     // delete http;
 }
 //初始化就是获取session，以及是否需要验证码等信息，为下一步的登录初始化网络连接
 void ShanbayDict::connect(){
+    http=new QNetworkAccessManager(this);
+    http->setCookieJar(new QNetworkCookieJar(this));
+    QObject::connect(http,SIGNAL(finished(QNetworkReply*)),this,SLOT(httpfinished(QNetworkReply*)));
     this->state = NetState::connect;
-    getSessionid();
+    //getSessionid();//现在已经不再需要实现获取session了
 }
 
 void ShanbayDict::getSessionid(){

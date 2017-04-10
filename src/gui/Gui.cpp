@@ -25,33 +25,11 @@
 #include <dict/dict.h>
 #include "Gui.h"
 Gui::Gui(QObject *parent) : QObject(parent)
-{
-
-}
+{}
 void Gui::init(){
-
     engine = new QQmlApplicationEngine();
     QQmlContext *context = engine->rootContext();
     context->setContextProperty("cfg", DICT::cfg.get());
-
-    engine->load(QUrl(QStringLiteral("qrc:/qml/Login.qml")));
-    loginWin = qobject_cast<QWindow*>(engine->rootObjects().at(0));
-    loginWin->setIcon(QIcon(":/img/logo.png"));
-
-    //loginWin->setFlags(Qt::FramelessWindowHint);
-    //qDebug()<<engine.rootObjects().size()<<loginWin->objectName();
-    QObject::connect(loginWin,SIGNAL(signalRegisterClick()),
-                     this,SLOT(registerClick()));
-
-    QObject::connect(loginWin, SIGNAL(signalLoginClick(QString,QString,QString)),
-                     this, SIGNAL(signalLoginClick(QString,QString,QString)));
-    QObject::connect(loginWin,SIGNAL(signalFreshCaptchaImg()),
-                     this,SIGNAL(signalFreshCaptchaImg()));
-
-    QObject::connect(this,SIGNAL(signalShowCaptchaImg(QVariant)),
-                     loginWin,SLOT(showCaptchaImg(QVariant)));
-    QObject::connect(this,SIGNAL(signalSetLoginWinState(QVariant)),
-                     loginWin,SLOT(setState(QVariant)));
 
     engine->load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     mainWin = qobject_cast<QWindow*>(engine->rootObjects().last());
@@ -68,39 +46,44 @@ void Gui::init(){
                      this,SIGNAL(signalBtnaddwordClick(QString,QString)));
     QObject::connect(this,SIGNAL(signalAddwordRetMain(QVariant)),
                      mainWin,SLOT(addWordRet(QVariant)));
-
-
-
-    engine->load(QUrl(QStringLiteral("qrc:/qml/Balloon.qml")));
-    balloonWin = qobject_cast<QWindow*>(engine->rootObjects().last());
-    QObject::connect(balloonWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
-                     this,SIGNAL(signalBtnaddwordClick(QString,QString)));
-    QObject::connect(this,SIGNAL(signalAddwordRetBalloon(QVariant)),
-                     balloonWin,SLOT(addWordRet(QVariant)));
-
-    engine->load(QUrl(QStringLiteral("qrc:/qml/Setup.qml")));
-    setupWin = qobject_cast<QWindow*>(engine->rootObjects().last());
-    setupWin->setIcon(QIcon(":/img/logo.png"));
-#ifdef Q_OS_WIN
-    setupWin->setFlags(Qt::Dialog);
-#else
-    setupWin->setFlags(Qt::WindowStaysOnTopHint);
-#endif
-
-    engine->load(QUrl(QStringLiteral("qrc:/qml/About.qml")));
-    aboutWin = qobject_cast<QWindow*>(engine->rootObjects().last());
-    aboutWin->setIcon(QIcon(":/img/logo.png"));
 }
 //loginWin
+void Gui::showLoginWin(){
+    qDebug()<<"show loginwin";
+    if(loginWin==nullptr){
+        qDebug()<<"load loginwin";
+        engine->load(QUrl(QStringLiteral("qrc:/qml/Login.qml")));
+        loginWin = qobject_cast<QWindow*>(engine->rootObjects().last());
+        loginWin->setIcon(QIcon(":/img/logo.png"));
+
+        //loginWin->setFlags(Qt::FramelessWindowHint);
+        //qDebug()<<engine.rootObjects().size()<<loginWin->objectName();
+        QObject::connect(loginWin,SIGNAL(signalRegisterClick()),
+                         this,SLOT(registerClick()));
+
+        QObject::connect(loginWin, SIGNAL(signalLoginClick(QString,QString,QString)),
+                         this, SIGNAL(signalLoginClick(QString,QString,QString)));
+        QObject::connect(loginWin,SIGNAL(signalFreshCaptchaImg()),
+                         this,SIGNAL(signalFreshCaptchaImg()));
+
+        QObject::connect(this,SIGNAL(signalShowCaptchaImg(QVariant)),
+                         loginWin,SLOT(showCaptchaImg(QVariant)));
+        QObject::connect(this,SIGNAL(signalSetLoginWinState(QVariant)),
+                         loginWin,SLOT(setState(QVariant)));
+    }
+    loginWin->show();
+
+}
+
 void Gui::showCaptchaImg(const QString &url){
     emit signalShowCaptchaImg(url);
 }
 void Gui::setLoginWinState(const QString &str){
+    qDebug()<<"set loginstate"<<str;
     emit signalSetLoginWinState(str);
 }
 //mainWin
 void Gui::showMainWin(){
-    //mainWin->hide();
     mainWin->showNormal();
 }
 void Gui::hideMainWin(){
@@ -117,7 +100,6 @@ void Gui::addWordRet(const QString &data){
         qDebug()<<"balloon add word ret";
         emit signalAddwordRetBalloon(data);
     }
-
 }
 
 void Gui::registerClick(){
@@ -125,10 +107,26 @@ void Gui::registerClick(){
 }
 
 void Gui::showSetupWin(){
+    if(setupWin==nullptr){
+        engine->load(QUrl(QStringLiteral("qrc:/qml/Setup.qml")));
+        setupWin = qobject_cast<QWindow*>(engine->rootObjects().last());
+        setupWin->setIcon(QIcon(":/img/logo.png"));
+#ifdef Q_OS_WIN
+        setupWin->setFlags(Qt::Dialog);
+#else
+        setupWin->setFlags(Qt::WindowStaysOnTopHint);
+#endif
+
+    }
     setupWin->show();
 }
 
 void Gui::showAboutWin(){
+    if(aboutWin==nullptr){
+        engine->load(QUrl(QStringLiteral("qrc:/qml/About.qml")));
+        aboutWin = qobject_cast<QWindow*>(engine->rootObjects().last());
+        aboutWin->setIcon(QIcon(":/img/logo.png"));
+    }
     aboutWin->show();
     hideMainWin();
 }
@@ -141,6 +139,14 @@ void Gui::showWord(DictType dictType,const QString &wordinfo){
     }
 }
 void Gui::showWordInBalloon(DictType dictType,const QString &wordinfo){
+    if(balloonWin==nullptr){
+        engine->load(QUrl(QStringLiteral("qrc:/qml/Balloon.qml")));
+        balloonWin = qobject_cast<QWindow*>(engine->rootObjects().last());
+        QObject::connect(balloonWin,SIGNAL(signalBtnaddwordClick(QString,QString)),
+                         this,SIGNAL(signalBtnaddwordClick(QString,QString)));
+        QObject::connect(this,SIGNAL(signalAddwordRetBalloon(QVariant)),
+                         balloonWin,SLOT(addWordRet(QVariant)));
+    }
     balloonWin->setPosition(QCursor::pos()+QPoint(10,15));
     balloonWin->show();
     if(dictType==DictType::ShanbayDict){

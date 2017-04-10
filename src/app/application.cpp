@@ -106,8 +106,8 @@ void Application::showSystrayIcon(){
 
     QObject::connect(loginshanbayAction,&QAction::triggered,[&](){
         //DICT::gui->setLoginWinState("正在连接扇贝网...");
-        DICT::gui->mainWin->hide();
-        DICT::gui->loginWin->show();
+        DICT::gui->hideMainWin();
+        DICT::gui->showLoginWin();
     });
     //Qt bug:Ubuntu 14.04 Qt 5.6 QSystemTrayIcon doesn't emit activated signal
     QObject::connect(trayIcon,&QSystemTrayIcon::activated,
@@ -139,16 +139,13 @@ void Application::closeSystrayIcon(){
 void Application::run(){
 
     DICT::init();
-    setScreenText();
-    showSystrayIcon();
     if(DICT::cfg->isStartloginshanbay()){
-        DICT::gui->loginWin->show();
-        return;
+        DICT::gui->showLoginWin();
+    }else{
+        if(!DICT::cfg->isAutohide()){
+            DICT::gui->showMainWin();
+        }
     }
-    if(DICT::cfg->isAutohide()) return;
-    DICT::gui->mainWin->show();
-
-
 }
 void Application::captureText(QString text){
     capture_text = text.trimmed();
