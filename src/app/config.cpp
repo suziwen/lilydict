@@ -58,6 +58,11 @@ void Config::load(){
     autohide=settings_->value("autohide",false).toBool();
     startloginshanbay=settings_->value("startloginshanbay",false).toBool();
     autoaddword=settings_->value("autoaddword",false).toBool();
+
+    x = settings_->value("x",0).toInt();
+    y = settings_->value("y",0).toInt();
+    width = settings_->value("width",800).toInt();
+    height = settings_->value("height",390).toInt();
 }
 void Config::save(){
     settings_->setValue("username",username);
@@ -73,6 +78,10 @@ void Config::save(){
     settings_->setValue("autohide",autohide);
     settings_->setValue("startloginshanbay",startloginshanbay);
     settings_->setValue("autoaddword",autoaddword);
+    settings_->setValue("x",x);
+    settings_->setValue("y",y);
+    settings_->setValue("width",width);
+    settings_->setValue("height",height);
     settings_->sync();
 }
 QString Config::getUsername(){
@@ -180,4 +189,36 @@ bool Config::isLoginshanbay(){
 void Config::setLoginshanbay(bool value){
     loginshanbay=value;
     emit signalChange("loginshanbay",value);
+}
+
+int Config::getX(){
+    return x;
+}
+void Config::setX(int value){
+    x=value;
+    emit signalChange("x",value);
+}
+
+int Config::getY(){
+    return y;
+}
+void Config::setY(int value){
+    y=value;
+    emit signalChange("y",value);
+}
+
+int Config::getWidth(){
+    return width;
+}
+void Config::setWidth(int value){
+    width=value;
+    emit signalChange("width",value);
+}
+
+int Config::getHeight(){
+    return height;
+}
+void Config::setHeight(int value){
+    height=value;
+    emit signalChange("height",value);
 }

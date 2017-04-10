@@ -73,6 +73,7 @@ private:
     getclipboardtext,
     getselectedtext,
     showquerylogo;
+    int x,y,width,height;
     QSettings *settings_;
     void load();
     void save();
@@ -141,6 +142,18 @@ public:
 
     Q_INVOKABLE bool isLoginshanbay();
     Q_INVOKABLE void setLoginshanbay(bool value);
+
+    Q_INVOKABLE int getX();
+    Q_INVOKABLE void setX(int value);
+
+    Q_INVOKABLE int getY();
+    Q_INVOKABLE void setY(int value);
+
+    Q_INVOKABLE int getWidth();
+    Q_INVOKABLE void setWidth(int value);
+
+    Q_INVOKABLE int getHeight();
+    Q_INVOKABLE void setHeight(int value);
 };
 
 #endif // CONFIG_H

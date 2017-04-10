@@ -7,6 +7,10 @@ Window {
     width: 800
     height: 390
     title: cfg.getVersion()
+    onXChanged: cfg.setX(x)
+    onYChanged: cfg.setY(y)
+    onWidthChanged: cfg.setWidth(width)
+    onHeightChanged: cfg.setHeight(height)
     property Dict dict: Dict{}
     //flags: Q_OS_WIN ? Qt.Dialog:Qt.WindowStaysOnTopHint
     //flags: Qt.Dialog
@@ -111,8 +115,20 @@ Window {
         visible: false
     }
     Component.onCompleted: {
-        setX(Screen.width / 2 - width / 2);
-        setY(Screen.height / 2 - height / 2);
+        //setX(Screen.width / 2 - width / 2);
+        //setY(Screen.height / 2 - height / 2);
+        if(cfg.getX()==0){
+            setX(Screen.width / 2 - width / 2);
+        }else{
+            setX(cfg.getX())
+        }
+        if(cfg.getY()==0){
+            setY(Screen.height / 2 - height / 2);
+        }else{
+            setY(cfg.getY())
+        }
+        setWidth(cfg.getWidth());
+        setHeight(cfg.getHeight());
         mainForm.word_name.text = "";
         mainForm.text_def.text = "";
         mainForm.btn_addword.visible = false;
