@@ -61,8 +61,8 @@ void Config::load(){
 
     x = settings_->value("x",0).toInt();
     y = settings_->value("y",0).toInt();
-    width = settings_->value("width",800).toInt();
-    height = settings_->value("height",390).toInt();
+    width = settings_->value("width",0).toInt();
+    height = settings_->value("height",0).toInt();
 }
 void Config::save(){
     settings_->setValue("username",username);

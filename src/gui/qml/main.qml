@@ -117,18 +117,11 @@ Window {
     Component.onCompleted: {
         //setX(Screen.width / 2 - width / 2);
         //setY(Screen.height / 2 - height / 2);
-        if(cfg.getX()==0){
-            setX(Screen.width / 2 - width / 2);
-        }else{
-            setX(cfg.getX())
-        }
-        if(cfg.getY()==0){
-            setY(Screen.height / 2 - height / 2);
-        }else{
-            setY(cfg.getY())
-        }
-        setWidth(cfg.getWidth());
-        setHeight(cfg.getHeight());
+        setX(cfg.getX()==0?Screen.width / 2 - width / 2:cfg.getX());
+        setY(cfg.getY()==0?Screen.height / 2 - height / 2:cfg.getY());
+
+        setWidth(cfg.getWidth()==0?width:cfg.getWidth());
+        setHeight(cfg.getHeight()==0?height:cfg.getHeight());
         mainForm.word_name.text = "";
         mainForm.text_def.text = "";
         mainForm.btn_addword.visible = false;
