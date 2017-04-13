@@ -20,7 +20,7 @@ QtObject {
             mainForm.btn_addword.visible = false;
             mainForm.pronu_us.visible = false;
             mainForm.btn_sound0.visible = mainForm.btn_sound1.visible = false;
-            mainForm.text_def.text = dict.shanbayWordinfo = dict.def_en_info = "";
+            mainForm.text_shanbay.text = dict.shanbayWordinfo = dict.def_en_info = "";
             return;
         }
         if(mainForm.textWord) mainForm.textWord.text = "";
