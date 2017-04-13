@@ -55,7 +55,7 @@ void YoudaoDict::httpfinished(QNetworkReply* reply){
     int pos1=replData.indexOf("<div class=\"trans-container\">");
     if(pos1>0){
         int pos2=replData.indexOf("</div>",pos1)+6;
-        wordinfo=replData.mid(pos1,pos2-pos1);
+        wordinfo=replData.mid(pos1,pos2-pos1).replace("class=\"additional\"","style=\"color:gray\"");
     }else{
         wordinfo.clear();
     }

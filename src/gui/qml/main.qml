@@ -20,20 +20,16 @@ Window {
     function addWordRet(retstr){
        dict.addWordRet(retstr);
     }
-
-    /////////////////////////////
-    function showWord(){
-        mainForm.text_def.text = dict.shanbayWordinfo+dict.youdaoWordinfo + dict.def_en_info ;
-    }
-
     function showYoudaoWord(wordinfo){
         dict.setYoudaoWordinfo(wordinfo);
-        showWord();
+        mainForm.text_youdao.text = dict.youdaoWordinfo;
+        mainForm.rectangle_youdao.visible = true;
     }
-
     function showShanbayWord(wordstr){
         dict.setShanbayWordinfo(wordstr);
-        showWord();
+        mainForm.text_shanbay.text = dict.shanbayWordinfo;
+        mainForm.text_en.text = dict.def_en_info ;
+        mainForm.rectangle_shanbay.visible = mainForm.rectangle_en.visible = true;
     }
     ///////////////////////////////
     Audio {
@@ -52,9 +48,10 @@ Window {
         MainForm {
             id: mainForm
             width:  window.width //text_def.width + 20
-            height: text_def.height + 100
+            //height: text_def.height + 100
             btn_query.onClicked: {
                 winInfo.hide();
+                //rectangle_shanbay.visible = rectangle_youdao.visible = rectangle_en.visible =false;
                 signalBtnqueryClick(textWord.text);
             }
             btn_addword.onClicked: dict.addWord();
@@ -123,7 +120,7 @@ Window {
         setWidth(cfg.getWidth()==0?width:cfg.getWidth());
         setHeight(cfg.getHeight()==0?height:cfg.getHeight());
         mainForm.word_name.text = "";
-        mainForm.text_def.text = "";
+        //mainForm.text_shanbay.text = mainForm.text_youdao.text = mainForm.text_en.text = "";
         mainForm.btn_addword.visible = false;
         mainForm.pronu_us.visible = false;
         mainForm.btn_sound0.visible = mainForm.btn_sound1.visible = false;

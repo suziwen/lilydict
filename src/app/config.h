@@ -79,7 +79,7 @@ private:
     void save();
 public:
     //百合词典版本信息
-    QString version = "1.0.0";
+    QString version = "1.0.1";
     QString versioninformation=QObject::tr("百合词典%1").arg(version);
     //所有使用本软件全部或者部分代码的程序设计人员请保留lience信息，并在所发布的软件关于窗口中进行显示。
     QString licenceinformation=QObject::tr("<h2>%1</h2>"

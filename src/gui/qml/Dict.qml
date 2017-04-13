@@ -1,23 +1,16 @@
 import QtQuick 2.0
 
 QtObject {
-    property string shanbaylogo: "<div style='color:grey;'><img src='qrc:////img/shanbay.ico' height='11'/>扇贝</div>"
-    property string youdaologo: "<div style='background-Color:gray;color:grey;'><img src='qrc:////img/youdao.ico' height='11'>有道</div>"
-    property string def_en_info:""
+   property string def_en_info:""
     property string shanbayWordinfo: ""
     property string youdaoWordinfo: ""
-    property string youdaocolor: "White"
-    property string shanbaycolor: "WhiteSmoke"
     property var voc
     function setYoudaoWordinfo(wordinfo){
+        //console.log(wordinfo);
         if(wordinfo===""){
             youdaoWordinfo="";
         }else{
-             youdaoWordinfo="<table style='background-color:"+youdaocolor+"' cellSpacing=0>"+
-             "<tr>"+
-             "<td valign='top'>"+youdaologo+"</td><td>"+wordinfo+"</td>"+
-             "</tr>"+
-             "</table>";
+             youdaoWordinfo=wordinfo;
         }
     }
     function setShanbayWordinfo(wordstr){//qml能够把调用语境中的变量和函数都带进来，比如mainForm
@@ -47,10 +40,10 @@ QtObject {
         }else{
             mainForm.btn_sound0.visible = mainForm.btn_sound1.visible = false;
         }
-        dict.def_en_info = "<table style='background-Color:mintcream' cellSpacing=1>";
+        dict.def_en_info = "<table cellSpacing=1>";
         for(var pos in voc.en_definitions){
-            //console.log(pos);
-            dict.def_en_info += "<tr><td align='right'>"+pos +"</td><td><ol>";
+            console.log(pos);
+            dict.def_en_info += "<tr><td align='left' style='color:gray'>"+pos +"</td><td><ol>";
             var defs=voc.en_definitions[pos];
             for(var i=0;i<defs.length;i++){
                 dict.def_en_info += "<li>" + defs[i] +"</li>";
@@ -61,11 +54,12 @@ QtObject {
         }
         dict.def_en_info+="</table>"
 
-        dict.shanbayWordinfo ="<table style='background-Color:"+dict.shanbaycolor+"' cellSpacing=1>"+
-                     "<tr>"+
-                     "<td valign='middle'>"+dict.shanbaylogo+"</td><td><ul><li>"+voc.definition+"</li></ul></td>"+
-                     "</tr>"+
-                     "</table>";
+        dict.shanbayWordinfo =voc.definition;
+//                "<table style='background-Color:"+dict.shanbaycolor+"' cellSpacing=1>"+
+//                     "<tr>"+
+//                     "<td valign='middle'>"+dict.shanbaylogo+"</td><td><ul><li>"+voc.definition+"</li></ul></td>"+
+//                     "</tr>"+
+//                     "</table>";
     }
     function addWord(){
         if(!cfg.isLoginshanbay()){

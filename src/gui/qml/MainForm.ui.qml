@@ -10,21 +10,27 @@ Rectangle {
     property alias btn_sound0: btn_sound0
     property alias btn_sound1: btn_sound1
     property alias word_name: word_name
-    property alias text_def: text_def
     property alias btn_addword: btn_addword
     property alias pronu_uk: pronu_uk
     property alias pronu_us: pronu_us
+    property alias text_shanbay: text_shanbay
+    property alias text_youdao: text_youdao
+    property alias text_en: text_en
+    property alias rectangle_shanbay: rectangle_shanbay
+    property alias rectangle_youdao: rectangle_youdao
+    property alias rectangle_en: rectangle_en
     //anchors.fill: parent
     //color: "#ffffff"
     TextField {
         id: textWord
         x: 8
-        y: 17
+        y: 10
         width: 360
-        height: 32
+        height: 27
         text: ""
+        inputMask: qsTr("")
         opacity: 0.9
-        font.pointSize: 15
+        font.pointSize: 12
         placeholderText: qsTr("Input English Word")
         style: TextFieldStyle {
             textColor: "black"
@@ -38,7 +44,7 @@ Rectangle {
     Button {
         id: btn_query
         x: 380
-        y: 20
+        y: 10
         width: 55
         height: 27
         text: qsTr("查询")
@@ -47,7 +53,7 @@ Rectangle {
     RowLayout {
         id: rowLayout_pronu
         x: 8
-        y: 57
+        y: 36
         width: 180
         height: 21
 
@@ -109,16 +115,141 @@ Rectangle {
         }
 
     }
-    Text {
-        id: text_def
+
+
+    Rectangle {
+        id: rectangle_shanbay
         x: 10
-        y: 95
-        width: parent.width - 20
-        //height: 77
-        text: qsTr("word definition")
-        clip: false
-        textFormat: Text.RichText
-        wrapMode: Text.WrapAnywhere
-        font.pixelSize: 15
+        y: 70
+        width: parent.width-20
+        //Layout.fillHeight:true
+        color: "#f5f5f5"
+        radius: 0
+        visible: false
+        height: text_shanbay.paintedHeight
+        border.color: "#e3e3e3"
+
+
+
+        Text {
+            id: text_shanbay
+            width: parent.width - 20
+            //height: 77
+            text: qsTr("word definition youdao")
+            clip: false
+            textFormat: Text.RichText
+            wrapMode: Text.WrapAnywhere
+            font.pixelSize: 15
+        }
+        Image {
+            id: image1
+            y: 9
+            sourceSize.height: 15
+            sourceSize.width: 15
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.rightMargin: 2
+            z: 1
+            source: "../img/shanbay.ico"
+        }
+        Label {
+            id: label1
+            color: "#9e9898"
+            text: qsTr("词义来源扇贝网")
+            anchors.rightMargin: 20
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            font.pointSize: 9
+
+        }
+    }
+
+    Rectangle {
+        id: rectangle_youdao
+        x: 10
+        y: rectangle_shanbay.y+rectangle_shanbay.height+10
+        width: parent.width-20
+        //Layout.fillHeight:true
+        color: "#f5f5f5"
+        radius: 3
+        visible: false
+        height: text_youdao.paintedHeight
+        border.color: "#e3e3e3"
+
+        Image {
+            id: image2
+            y: 9
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            z: 1
+            source: "../img/youdao.ico"
+        }
+
+        Text {
+            id: text_youdao
+            width: parent.width - 20
+            //height: 77
+            text: qsTr("word definition youdao")
+            clip: false
+            textFormat: Text.RichText
+            wrapMode: Text.WrapAnywhere
+            font.pixelSize: 15
+        }
+
+        Label {
+            id: label2
+            color: "#9e9898"
+            text: qsTr("词义来源有道词典")
+            anchors.rightMargin: 18
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            font.pointSize: 9
+        }
+    }
+
+
+    Rectangle {
+        id: rectangle_en
+        x: 10
+        y: rectangle_youdao.y+rectangle_youdao.height+10
+        width: parent.width-20
+        //Layout.fillHeight:true
+        color: "#f5f5f5"
+        visible: false
+        height: text_en.paintedHeight
+        border.color: "#e3e3e3"
+
+        Image {
+            id: image3
+            y: 9
+            sourceSize.height: 15
+            sourceSize.width: 15
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.rightMargin: 2
+            z: 1
+            source: "../img/shanbay.ico"
+        }
+
+        Text {
+            id: text_en
+            width: parent.width - 20
+            //height: 77
+            text: qsTr("word definition youdao")
+            clip: false
+            textFormat: Text.RichText
+            wrapMode: Text.WrapAnywhere
+            font.pixelSize: 15
+        }
+
+        Label {
+            id: label3
+            color: "#9e9898"
+            text: qsTr("词义来源有道词典")
+            anchors.rightMargin: 18
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            font.pointSize: 9
+        }
     }
 }

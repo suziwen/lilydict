@@ -16,21 +16,20 @@ Window {
     }
     function showWord(){
         window.requestActivate();
-        mainForm.text_def.text = dict.shanbayWordinfo+dict.youdaoWordinfo;// + dict.def_en_info ;
+        mainForm.text_shanbay.text = dict.shanbayWordinfo;
+        mainForm.text_youdao.text = dict.youdaoWordinfo;
+        mainForm.rectangle_shanbay.visible = mainForm.rectangle_youdao.visible = true;
         window.width = Math.max(mainForm.rowLayout_pronu.width + 160,360);
-        window.height = Math.max(mainForm.text_def.height + 100,90);
+        window.height = Math.max(mainForm.rectangle_shanbay.height + mainForm.rectangle_youdao.height + 70,90);
     }
-
     function showYoudaoWord(wordinfo){
-        //console.log(wordinfo);
         dict.setYoudaoWordinfo(wordinfo);
         showWord();
     }
-
     function showShanbayWord(wordstr){
-        //console.log("wordstr:"+wordstr);
         dict.setShanbayWordinfo(wordstr);
         showWord();
+
     }
     Audio {
             id: playSound0

@@ -51,7 +51,7 @@ void DICT::showWord(DictType dictType,const QString &wordinfo){
 ////////////////////////
 void DICT::init(){    
     DICT::gui->init();
-    QTimer::singleShot(3000, [](){
+    QTimer::singleShot(1000, [](){
         qDebug()<<"延迟初始化，提高启动速度";
         DICT::logo = new Dictlogo();
         DICT::shanbayDict = std::make_unique<ShanbayDict>();
