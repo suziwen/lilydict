@@ -53,7 +53,7 @@ void Application::showSystrayIcon(){
     loginshanbayAction=new QAction(QIcon(":/img/shanbay.ico"),QObject::tr("登录扇贝网"),qApp);
     aboutAction=new QAction(QIcon(":/img/about.png"),QObject::tr("关于"),qApp);
 
-    loginshanbayAction->setCheckable(true);
+    //loginshanbayAction->setCheckable(true);
     autospeakAction->setCheckable(true);
     autospeakAction->setChecked(DICT::cfg->isAutospeak());
     getscreenwordAction->setCheckable(true);
@@ -75,24 +75,24 @@ void Application::showSystrayIcon(){
     QObject::connect(autospeakAction,&QAction::toggled,
                      [&](bool checked){
         DICT::cfg->setAutospeak(checked);
-        qDebug()<<"autospeak:"<<DICT::cfg->isAutospeak();
+        //qDebug()<<"autospeak:"<<DICT::cfg->isAutospeak();
     });
     QObject::connect(getscreenwordAction,&QAction::toggled,
                      [&](bool checked){
         DICT::cfg->setScreentext(checked);
-        qDebug()<<"getscreenwordAction:"<<checked;
-        setScreenText();
+        //qDebug()<<"getscreenwordAction:"<<checked;
+        //setScreenText();
     });
     QObject::connect(DICT::cfg.get(),&Config::signalChange,
-                     [&](const QString& key, const QVariant& value){
-        if(key=="screentext"){
-            getscreenwordAction->setChecked(value.toBool());
-        }else if(key=="autospeak"){
+                     [&](const QVariant& key, const QVariant& value){
+        if(key=="autospeak"){
             autospeakAction->setChecked(value.toBool());
-            setScreenText();
-        }else if(key=="selectedtext"){
-            setScreenText();
-        }else if(key=="clipboardtext"){
+            return;
+        }
+        if(key=="screentext"||key=="selectedtext"||key=="clipboardtext"){
+            if(key=="screentext"){
+                getscreenwordAction->setChecked(value.toBool());
+            }
             setScreenText();
         }
     });
@@ -167,10 +167,9 @@ void Application::setScreenText(){
         if(DICT::cfg->isGetselectedtext()){
             QObject::connect(qApp->clipboard(),&QClipboard::selectionChanged,
                              [&](){
-                qDebug()<<"selectionChanged"<< qApp->clipboard()->mimeData(QClipboard::Selection)->hasText()<<qApp->clipboard()->text(QClipboard::Selection);
-                qDebug()<< (qApp->mouseButtons() & Qt::LeftButton);
+                //qDebug()<<"selectionChanged"<< qApp->clipboard()->mimeData(QClipboard::Selection)->hasText()<<qApp->clipboard()->text(QClipboard::Selection);
+                //qDebug()<< (qApp->mouseButtons() & Qt::LeftButton);
                 captureText(qApp->clipboard()->text(QClipboard::Selection));
-
             });
 
         }else{

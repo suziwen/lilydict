@@ -61,7 +61,7 @@ public:
     ~Config();
 
 signals:
-    void signalChange(const QString& key,const QVariant & value);
+    void signalChange(const QVariant& key,const QVariant & value);
 
 public slots:
 

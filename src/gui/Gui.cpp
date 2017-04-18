@@ -116,7 +116,8 @@ void Gui::showSetupWin(){
 #else
         setupWin->setFlags(Qt::WindowStaysOnTopHint);
 #endif
-
+        QObject::connect(DICT::cfg.get(),SIGNAL(signalChange(QVariant,QVariant)),
+                         setupWin,SLOT(setCfgState(QVariant,QVariant)));
     }
     setupWin->show();
 }

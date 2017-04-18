@@ -5,7 +5,17 @@ Window {
     width: 630
     height: 360
     //flags: Q_OS_WIN ? Qt.Dialog:Qt.WindowStaysOnTopHint
+    function setCfgState(key,value){
+        console.log(key,value);
+        if(key==="autospeak"){
+            setupForm.cb_autospeak.checked = value;
+        }else if(key==="screentext"){
+            setupForm.cb_screentext.checked = value;
+        }
+    }
+
     SetupForm {
+        id: setupForm
         btn_return.onClicked: {
             window.close();
         }
