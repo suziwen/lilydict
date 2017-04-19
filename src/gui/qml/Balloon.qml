@@ -50,7 +50,7 @@ Window {
 
     }
     onActiveChanged: {
-        console.log("window onActiveChanged"+ active);
+        //console.log("window onActiveChanged"+ active);
         visible = active;
     }
     WinInfo{

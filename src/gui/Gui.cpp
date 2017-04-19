@@ -49,9 +49,9 @@ void Gui::init(){
 }
 //loginWin
 void Gui::showLoginWin(){
-    qDebug()<<"show loginwin";
+    //qDebug()<<"show loginwin";
     if(loginWin==nullptr){
-        qDebug()<<"load loginwin";
+        //qDebug()<<"load loginwin";
         engine->load(QUrl(QStringLiteral("qrc:/qml/Login.qml")));
         loginWin = qobject_cast<QWindow*>(engine->rootObjects().last());
         loginWin->setIcon(QIcon(":/img/logo.png"));

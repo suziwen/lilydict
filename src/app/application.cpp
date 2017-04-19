@@ -136,8 +136,9 @@ void Application::closeSystrayIcon(){
     dictMenu->deleteLater();
 }
 
-void Application::run(){
-
+void Application::run(){    
+    timer_captureText = new QTimer(qApp);
+    timer_captureText->setSingleShot(true);
     DICT::init();
     if(DICT::cfg->isStartloginshanbay()){
         DICT::gui->showLoginWin();
@@ -165,11 +166,14 @@ void Application::setScreenText(){
     }
     if(qApp->clipboard()->supportsSelection()){//windows and os_x not supportSection
         if(DICT::cfg->isGetselectedtext()){
+            QObject::connect(timer_captureText,&QTimer::timeout, [this](){
+                captureText(qApp->clipboard()->text(QClipboard::Selection));
+            });
             QObject::connect(qApp->clipboard(),&QClipboard::selectionChanged,
                              [&](){
                 //qDebug()<<"selectionChanged"<< qApp->clipboard()->mimeData(QClipboard::Selection)->hasText()<<qApp->clipboard()->text(QClipboard::Selection);
                 //qDebug()<< (qApp->mouseButtons() & Qt::LeftButton);
-                captureText(qApp->clipboard()->text(QClipboard::Selection));
+                timer_captureText->start(300);
             });
 
         }else{
@@ -180,7 +184,6 @@ void Application::setScreenText(){
         QObject::connect(qApp->clipboard(),&QClipboard::dataChanged,
                          [&](){
             qDebug()<<"dataChanged"<<qApp->clipboard()->mimeData(QClipboard::Clipboard)->hasText()<<qApp->clipboard()->text();
-
             captureText(qApp->clipboard()->text());
         });
     }else{

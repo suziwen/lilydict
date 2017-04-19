@@ -42,7 +42,7 @@ QtObject {
         }
         dict.def_en_info = "<table cellSpacing=1>";
         for(var pos in voc.en_definitions){
-            console.log(pos);
+            //console.log(pos);
             dict.def_en_info += "<tr><td align='left' style='color:gray'>"+pos +"</td><td><ol>";
             var defs=voc.en_definitions[pos];
             for(var i=0;i<defs.length;i++){
@@ -85,7 +85,7 @@ QtObject {
         winInfo.showinfo(voc.content+"  已经加入扇贝网生词本，列入背单词计划。");
     }
     function updateBtnaddword(learning_id){
-        console.log("update add btn");
+        //console.log("update add btn");
         if(learning_id&&learning_id!==0){
             mainForm.btn_addword.iconSource = "qrc:/img/add0.png";
             mainForm.btn_addword.tooltip = qsTr("忘记了，重新加入背单词计划");

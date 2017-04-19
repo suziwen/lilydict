@@ -25,6 +25,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QAction>
+#include <QTimer>
 class Application
 {
 public:
@@ -48,6 +49,7 @@ public:
     QAction *quitAction;
     QAction *aboutAction;
     QAction *loginshanbayAction;
+    QTimer *timer_captureText;
     //QAction *helpAction;
 };
 

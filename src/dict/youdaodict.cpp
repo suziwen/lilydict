@@ -49,7 +49,7 @@ void YoudaoDict::queryWord(const QString &word){
 }
 QString wordinfo;
 void YoudaoDict::httpfinished(QNetworkReply* reply){
-    qDebug()<<"end youdao!!!!!";
+    //qDebug()<<"end youdao!!!!!";
     QByteArray replData=reply->readAll();
 
     int pos1=replData.indexOf("<div class=\"trans-container\">");

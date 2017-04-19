@@ -409,7 +409,7 @@ void ShanbayDict::httpfinished(QNetworkReply* reply){
 
 }
 QString ShanbayDict::getCookie(const QString &name){
-    qDebug()<<"get cookie";
+    //qDebug()<<"get cookie";
     foreach(QNetworkCookie cookie , http->cookieJar()->cookiesForUrl(QUrl("http://www.shanbay.com"))){
         qDebug()<<cookie.name();
 
